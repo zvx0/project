@@ -1,64 +1,76 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Easypaisa Receipt</title>
   <style>
-    form { width: 300px; margin: 0 auto; text-align: left; }
-    label { font-weight: bold; }
-    input[type="text"] { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background-color: #45a049; }
-    #container { width: 360px; height: 600px; margin: 0 auto; overflow: hidden; }
-    #canvas { font-family: 'Roboto', Arial, sans-serif; color: #666666; font-size: 15px; position: relative; }
-    #intro, #datetimeValue, #idValue, #mobacc, #recnameValue, #recnumValue, #accdet, #sennameValue, #sennumValue, #amountValue, #amount2 { position: absolute; left: 7.5%; }
-    #mobacc { top: 34%; position: absolute; left: 14.5%; }
-    #datetimeValue { top: 23.5%; }
-    #idValue { top: 26%; }
-    #recnameValue { top: 42%; }
-    #recnumValue { top: 44.8%; }
-    #accdet { top: 52.8%; }
-    #sennameValue { top: 60%; }
-    #sennumValue { top: 62.8%; }
-    #amountValue { top: 69.6%; }
-    #amount2 { top: 83.7%; font-size: 18px; left: 16.7%; font-family: 'Roboto', Arial, sans-serif; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #inputForm {
+      width: 50%;
+      margin: 0 auto;
+    }
+    #inputForm label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    #inputForm input {
+      width: 100%;
+      height: 30px;
+      margin-bottom: 20px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    #container {
+      width: 360px;
+      height: 600px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      display: none;
+      margin: 0 auto;
+    }
+    #canvas {
+      width: 360px;
+      height: 600px;
+    }
   </style>
 </head>
 <body>
   <form id="inputForm" onsubmit="return false;">
-    <label for="datetime">Date and Time:</label><br>
-    <input type="text" id="datetime" name="datetime"><br>
-    <label for="id">TRX ID:</label><br>
-    <input type="text" id="id" name="id"><br>
-    <label for="recname">Receiver Name:</label><br>
-    <input type="text" id="recname" name="recname"><br>
-    <label for="recnum">Receiver Number:</label><br>
-    <input type="text" id="recnum" name="recnum"><br>
-    <label for="senname">Sender Name:</label><br>
-    <input type="text" id="senname" name="senname"><br>
-    <label for="sennum">Sender Number:</label><br>
-    <input type="text" id="sennum" name="sennum"><br>
-    <label for="amount">Amount:</label><br>
-    <input type="text" id="amount" name="amount"><br><br>
-    <button onclick="generateReceipt()">Generate Receipt</button>
+    <label for="datetime">Date and Time:</label>
+    <input type="datetime-local" id="datetime" required>
+    <label for="id">ID:</label>
+    <input type="text" id="id" required>
+    <label for="recname">Recipient Name:</label>
+    <input type="text" id="recname" required>
+    <label for="recnum">Recipient Number:</label>
+    <input type="tel" id="recnum" required>
+    <label for="senname">Sender Name:</label>
+    <input type="text" id="senname" required>
+    <label for="sennum">Sender Number:</label>
+    <input type="tel" id="sennum" required>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" required>
+    <button onclick="window.generateReceipt()">Generate Receipt</button>
   </form>
-  <div id="container" style="display: none;">
-    <div id="canvas">
-      <h id="intro">You have sent money.</h>
-      <h id="datetimeValue"></h>
-      <h id="idValue"></h>
-      <h id="mobacc">easypaisa Mobile Account</h>
-      <h id="recnameValue"></h>
-      <h id="recnumValue"></h>
-      <h id="accdet"></h>
-      <h id="sennameValue"></h>
-      <h id="sennumValue"></h>
-      <h id="amountValue"></h>
-      <img height="600px" width="350px" src="https://raw.githubusercontent.com/hashiiem/project/master/easypaisa.png">
-      <h id="amount2"><b></b></h>
-    </div>
+  <div id="container">
+    <h2 id="intro"></h2>
+    <p>Transaction Date: <span id="datetimeValue"></span></p>
+    <p>Transaction ID: <span id="idValue"></span></p>
+    <h3>Recipient Details:</h3>
+    <p>Name: <span id="recnameValue"></span></p>
+    <p>Number: <span id="recnumValue"></span></p>
+    <p>Account Details: <span id="accdet"></span></p>
+    <h3>Sender Details:</h3>
+    <p>Name: <span id="sennameValue"></span></p>
+    <p>Number: <span id="sennumValue"></span></p>
+    <h3>Amount:</h3>
+    <p>PKR <span id="amountValue"></span></p>
+    <p>PKR <span id="amount2"></span></p>
   </div>
   <script>
-    function generateReceipt() {
+    window.generateReceipt = function() {
       var datetime = document.getElementById("datetime").value;
       var id = document.getElementById("id").value;
       var recname = document.getElementById("recname").value;
@@ -67,7 +79,6 @@
       var sennum = document.getElementById("sennum").value;
       var amount = document.getElementById("amount").value;
       document.getElementById("intro").innerText = "You have sent money.";
-      Here is the rest of the code:
       document.getElementById("datetimeValue").innerText = datetime;
       document.getElementById("idValue").innerText = "ID#" + id;
       document.getElementById("recnameValue").innerText = recname;
@@ -86,7 +97,7 @@
       ctx.textAlign = "left";
       ctx.textBaseline = "top";
       ctx.fillStyle = "#000000";
-      var container = document.getElementById("canvas");
+      var container = document.getElementById("container");
       ctx.drawImage(container, 0, 0);
       var imageData = canvas.toDataURL("image/png");
       var link = document.createElement("a");
@@ -96,6 +107,4 @@
       link.click();
       document.body.removeChild(link);
     }
-  </script>
-</body>
-</html>
+    
