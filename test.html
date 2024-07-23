@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Easypaisa Receipt</title>
+  <style>
+    /* CSS for form */
+    form {
+      width: 300px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    label {
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    /* Additional CSS for other elements */
+    #container {
+      width: 360px;
+      height: 600px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    #canvas {
+      font-family: 'Roboto', Arial, sans-serif;
+      color: #666666;
+      font-size: 15px;
+      position: relative;
+    }
+    #intro,
+    #datetimeValue,
+    #idValue,
+    #mobacc,
+    #recnameValue,
+    #recnumValue,
+    #accdet,
+    #sennameValue,
+    #sennumValue,
+    #amountValue,
+    #amount2 {
+      position: absolute;
+      left: 7.5%;
+    }
+    #mobacc {
+      top: 34%;
+      position: absolute;
+      left: 14.5%;
+    }
+    #datetimeValue {
+      top: 23.5%;
+    }
+    #idValue {
+      top: 26%;
+    }
+    #recnameValue {
+      top: 42%;
+    }
+    #recnumValue {
+      top: 44.8%;
+    }
+    #accdet {
+      top: 52.8%;
+    }
+    #sennameValue {
+      top: 60%;
+    }
+    #sennumValue {
+      top: 62.8%;
+    }
+    #amountValue {
+      top: 69.6%;
+    }
+    #amountValue {
+      font-size: 15px;
+      /* Same font size as amount2 */
+    }
+    #amount2 {
+      top: 83.7%;
+      font-size: 18px;
+      left: 16.7%;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-weight: bold;
+      /* Same font family as amount */
+    }
+    #intro {
+      top: 17.5%;
+      font-size: 13px;
+      left: 33%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Form for getting values from the user -->
+  <form id="inputForm" onsubmit="return false;">
+    <label for="datetime">Date and Time (e.g., 24-Feb-2024 11:54 AM):</label>
+    <br>
+    <input type="text" id="datetime" name="datetime">
+    <br>
+    <label for="id">TRX ID:</label>
+    <br>
+    <input type="text" id="id" name="id">
+    <br>
+    <label for="recname">Receiver Name:</label>
+    <br>
+    <input type="text" id="recname" name="recname">
+    <br>
+    <label for="recnum">Receiver Number:</label>
+    <br>
+    <input type="text" id="recnum" name="recnum">
+    <br>
+    <label for="senname">Sender Name:</label>
+    <br>
+    <input type="text" id="senname" name="senname">
+    <br>
+    <label for="sennum">Sender Number:</label>
+    <br>
+    <input type="text" id="sennum" name="sennum">
+    <br>
+    <label for="amount">Amount:</label>
+    <br>
+    <input type="text" id="amount" name="amount">
+    <br>
+    <br>
+    <button onclick="generateReceipt()">Generate Receipt</button>
+  </form>
+  <!-- Container initially hidden -->
+  <div id="container" style="display: none;">
+    <div id="canvas">
+      <!-- Elements with values filled by JavaScript -->
+      <h id="intro">You have sent money.</h>
+      <h id="datetimeValue"></h>
+      <h id="idValue"></h>
+      <h id="mobacc">easypaisa Mobile Account</h>
+      <h id="recnameValue"></h>
+      <h id="recnumValue"></h>
+      <h id="accdet"></h>
+      <h id="sennameValue"></h>
+      <h id="sennumValue"></h>
+      <h id="amountValue"></h>
+      <img height="600px" width="350px" src="https://raw.githubusercontent.com/hashiiem/project/master/easypaisa.png">
+      <h id="amount2"><b></b></h>
+    </div>
+  </div>
+  <script>
+    // Function to generate receipt
+    function generateReceipt() {
+      // Get form values
+      var datetime = document.getElementById("datetime").value;
+      var id = document.getElementById("id").value;
+      var recname = document.getElementById("recname").value;
+      var recnum = document.getElementById("recnum").value;
+      var senname = document.getElementById("senname").value;
+      var sennum = document.getElementById("sennum").value;
+      var amount = document.getElementById("amount").value;
+
+      // Update elements in the container with the collected values
+      document.getElementById("intro").innerText = "You have sent money.";
+      document.getElementById("datetimeValue").innerText = datetime;
+      document.getElementById("idValue").innerText = "ID#" + id;
+      document.getElementById("recnameValue").innerText = recname;
+      document.getElementById("recnumValue").innerText = recnum;
+      document.getElementById("accdet").innerText = recname; // Same as recname
+      document.getElementById("sennameValue").innerText = senname;
+      document.getElementById("sennumValue").innerText = sennum;
+      document.getElementById("amountValue").innerText = amount + ".00";
+      document.getElementById("amount2").innerText = amount + ".00"; // Same as amount
+
+      // Show the container
+      document.getElementById("container").style.display = "block";
+
+      // Convert the container to a PNG image and allow download
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      ctx.font = "15px Arial";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "top";
+      ctx.fillStyle = "#000000";
+
+      // Draw the container content on the canvas
+      ctx.drawImage(document.getElementById("container"), 0, 0);
+
+      // Get the PNG image data
+      var imageData = canvas.toDataURL("image/png");
+
+      // Create a link to download the image
+      var link = document.createElement("a");
+      link.href = imageData;
+      link.download = "receipt.png";
+      link.click();
+    }
+  </script>
+</body>
+</html>
