@@ -135,6 +135,10 @@
   </div>
 
   <script>
+
+window.onload=function(){
+    
+    
     document.getElementById("button").addEventListener("click",generateReceipt)
     // Function to generate receipt
     function generateReceipt() {
@@ -165,6 +169,7 @@ var img=document.createElement("img")
 img.src=canvas.toDataURL("image/png")
 document.getElementById("container"),appendChiId(img)
     }})}
+}
   </script>
    
 </body>
