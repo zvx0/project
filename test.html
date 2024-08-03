@@ -112,7 +112,7 @@
     <input type="text" id="sennum" name="sennum"><br>
     <label for="amount">Amount:</label><br>
     <input type="text" id="amount" name="amount"><br><br>
-    <button onclick="generateReceipt()">Generate Receipt</button>
+    <button id="button">Generate Receipt</button>
   </form>
 
   <!-- Container initially hidden -->
@@ -135,6 +135,7 @@
   </div>
 
   <script>
+    document.getElementByld("myButton").addEventListener("click",generateReceipt)
     // Function to generate receipt
     function generateReceipt() {
       // Get form values
@@ -163,7 +164,7 @@
 var img=document.createElement("img")
 img.src=canvas.toDataURL("image/png")
 document.getElementByld("container"),appendChild(img)
-    }
+    }}}
   </script>
    
 </body>
