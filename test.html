@@ -135,7 +135,7 @@
   </div>
 
   <script>
-    document.getElementByld("button").addEventListener("click",generateReceipt)
+    document.getElementById("button").addEventListener("click",generateReceipt)
     // Function to generate receipt
     function generateReceipt() {
       // Get form values
@@ -160,10 +160,10 @@
       document.getElementById("amount2").innerText =amount+".00"// Same as amount
 
       // Show the container
-      html2canvas(document.getElementByld("container"),{onrendered: function(canvas){
+      html2canvas(document.getElementById("container"),{onrendered: function(canvas){
 var img=document.createElement("img")
 img.src=canvas.toDataURL("image/png")
-document.getElementByld("container"),appendChild(img)
+document.getElementById("container"),appendChiId(img)
     }})}
   </script>
    
